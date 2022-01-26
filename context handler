@@ -1,0 +1,79 @@
+response = Map();
+info answers;
+//response.put("action","context");
+//response.put("context_id",context_id);
+if(context_id.equals("booking"))
+{
+	ans = answers.get("illness").get("text");
+	if(ans.containsIgnoreCase("Others"))
+	{
+		response.put("action","context");
+		response.put("context_id","specified");
+		//response.put("replies", {{"text": "Specify the ailment you are facing"}});
+		questions = Collection();
+		question1 = {"name":"specified","replies":{{"text":"Specify the ailment you are facing"}}};
+		questions.insert(question1);
+		response.put("questions",questions);
+	}
+}
+if(context_id.equals("booking"))
+{
+	ans1 = answers.get("schedule").get("text");
+	if(ans1.containsIgnoreCase("Yeah"))
+	{
+		response.put("action","context");
+		response.put("context_id","datetime");
+		questions = Collection();
+		question10 = {"name":"datetime","replies":{{"text":"Choose a date and time between 9 to 12pm only."}},"input":{"type":"calendar","time":true," tz":true,"from":"+1","label":"Schedule appointment","select_label":"Done","to":"+90"}};
+		questions.insert(question10);
+		response.put("questions",questions);
+	}
+	else if(ans.containsIgnoreCase("anytime"))
+	{
+		response.put("action","end");
+	}
+}
+else if(context_id.equals("datetime"))
+{
+	ans = answers.get("datetime").get("text");
+	response.put("action","context");
+	response.put("context_id","confirmdatetime");
+	question1 = {"name":"confirm","replies":{{"text":"Thank you. Call has been scheduled with our representative "}},"input":{"type":"select","options":{"Changetime","Thanks"}}};
+	questions = Collection();
+	questions.insert(question1);
+	response.put("questions",questions);
+}
+else if(context_id.equals("confirmdatetime"))
+{
+	ans = answers.get("confirm").get("text");
+	if(ans.containsIgnoreCase("Changetime"))
+	{
+		response.put("action","context");
+		response.put("context_id","datetime");
+		questions = Collection();
+		question1 = {"name":"datetime","replies":{{"text":"Choose a date and time between 9 to 12pm only."}},"input":{"type":"calendar","time":true,"tz":true,"from":"+1","label":"Schedule appointment","select_label":"Done","to":"+90"},"skippable":true};
+		questions.insert(question1);
+		response.put("questions",questions);
+	}
+	else if(ans.containsIgnoreCase("Thanks"))
+	{
+		response.put("action","context");
+		response.put("context_id","rating");
+		questions = Collection();
+		question1 = {"name":"rating","replies":{{"text":"How would you rate your chat session with our MedStar bot?"}},"input":{"type":"happiness-rating","level":"5"}};
+		questions.insert(question1);
+		response.put("questions",questions);
+		response.put("action","end");
+		response.put("replies",{{"text":"Have a great day"}});
+		//response.put("action","end");
+	}
+}
+return response;
+/*sendmail
+[
+	from: <expression>
+	to: <expression>
+	subject: <expression>
+	message: <expression>
+]
+*/
