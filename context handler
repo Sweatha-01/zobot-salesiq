@@ -1,6 +1,6 @@
 response = Map();
 info answers;
-if(context_id.equals("booking"))
+if(context_id.equals("booking")) 
 {
 	ans1 = answers.get("schedule").get("text");
 	if(ans1.containsIgnoreCase("Yeah"))
@@ -23,17 +23,9 @@ if(context_id.equals("booking"))
 		response.put("action","end");
 		response.put("replies",{{"text":"Thank you.You will receive an email from our agent regarding your appointment timings. Have a great day!"}});
 	}
-}
+	}
 else if(context_id.equals("datetime"))
 {
-	emailaddr = answers.get("email").get("text");
-	sendmail
-	[ 
-		from : "medstarhospitals@gmail.com"
-		to : emailaddr
-		subject: "Confirmation mail for the scheduled appointment"
-		message : "<div>This is the confirmation mail for your scheduled appointment, Click the confirm button to confirm your appointment.<br></div><div> You are receiving this email since you scheduled an appointment using our Medstar bot in our website 'MedStar Hospitals'. You can reach us @&nbsp;&nbsp;<a target='_blank' href='http://medstar.zohosites.com/'>http://medstar.zohosites.com/</a>&nbsp;<br></div>"
-	]
 	ans = answers.get("datetime").get("text");
 	response.put("action","context");
 	response.put("context_id","confirmdatetime");
@@ -65,5 +57,5 @@ else if(context_id.equals("confirmdatetime"))
 		response.put("action","end");
 		response.put("replies",{{"text":"Have a great day"}});
 	}
-}
+	} 
 return response;
