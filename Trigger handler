@@ -1,5 +1,5 @@
 response = Map();
 response.put("action","reply");
 response.put("replies",{"Hello there! 👋 How can i help you today?"});
-response.put("suggestions",{"Book appointments","Health insurance","Vaccination details","Personal assistance","Covid-19 guide","Biling and Payments","No Thanks!","Can't find what I'm looking for"});
+response.put("suggestions",{"Book appointments","Health insurance","Vaccination details","Covid-19 guide","Biling and Payments","No Thanks!","Can't find what I'm looking for"});
 return response;
