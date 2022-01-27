@@ -2,7 +2,7 @@ response = Map();
 msg = message.get("text");
 if(operation.equals("chat"))
 {
-	if(!msg.equalsIgnoreCase("Book appointments") && !msg.equalsIgnoreCase("Health insurance") && !msg.equalsIgnoreCase("Vaccination details") && !msg.equalsIgnoreCase("Personal assistance") && !msg.equalsIgnoreCase("Covid-19 guide") && !msg.equalsIgnoreCase("Biling and Payments"))
+	if(!msg.equalsIgnoreCase("Book appointments") && !msg.equalsIgnoreCase("Health insurance") && !msg.equalsIgnoreCase("Vaccination details") && !msg.equalsIgnoreCase("Personal assistance") && !msg.equalsIgnoreCase("Covid-19 guide") && !msg.equalsIgnoreCase("Biling and Payments") && !msg.equalsIgnoreCase("No Thanks!") && !msg.equalsIgnoreCase("Can't find what I'm looking for"))
 	{
 		response = Map();
 		response.put("action","reply");
@@ -11,11 +11,11 @@ if(operation.equals("chat"))
 		return response;
 	}
 }
-if(msg.equalsIgnoreCase("Book appointments"))
+if(msg.containsIgnoreCase("Book appointments"))
 {
 	response.put("action","context");
 	response.put("context_id","booking");
-	question1 = {"name":"name","replies":{"Great ! I just need a few more details to schedule a call",{"text":"What's your name?"}}};
+	question1 = {"name":"name","replies":{"Great ! I just need a few more details to schedule an appointment",{"text":"What's your name?"}}};
 	question2 = {"name":"contact","replies":{{"text":"Can I have your contact number ? Our representative will call you on this number.","validate":{"format":"phoneno","error":{"Enter a valid phone number"}},"field_name":"siq_phone"}}};
 	question3 = {"name":"age","replies":{{"text":"Thanks.Can I know your age ?"}}};
 	question4 = {"name":"gender","replies":{{"text":"Can I know your gender ?"}},"input":{"type":"select","options":{"Male","Female","Choose not to specify"}}};
@@ -35,6 +35,16 @@ if(msg.equalsIgnoreCase("Book appointments"))
 	questions.insert(question5);
 	questions.insert(question9);
 	response.put("questions",questions);
+}
+else if(msg.containsIgnoreCase("No Thanks!"))
+{
+	response.put("action","end");
+	response.put("replies",{{"text":"Thank you for visiting us.Have a great day!"}});
+}
+else if(msg.containsIgnoreCase("Can't find what I'm looking for"))
+{
+	response.put("action","end");
+	response.put("replies",{{"text":"You can contact our agents for help. Contact us at: 044 1234 5126, 044 9874 5624. Or you can mail us your query at medstarhospitals@gmail.com . Thank you for visiting us.Have a great day!"}});
 }
 else
 {
