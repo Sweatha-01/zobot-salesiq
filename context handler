@@ -1,6 +1,6 @@
 response = Map();
 info answers;
-if(context_id.equals("booking")) 
+if(context_id.equals("booking"))
 {
 	ans1 = answers.get("schedule").get("text");
 	if(ans1.containsIgnoreCase("Yeah"))
@@ -14,22 +14,16 @@ if(context_id.equals("booking"))
 	}
 	else if(ans1.containsIgnoreCase("anytime"))
 	{
-		response.put("action","context");
-		response.put("context_id","rating");
-		questions = Collection();
-		question1 = {"name":"rating","replies":{{"text":"How would you rate your chat session with our MedStar bot?"}},"input":{"type":"happiness-rating","level":"5"}};
-		questions.insert(question1);
-		response.put("questions",questions);
 		response.put("action","end");
 		response.put("replies",{{"text":"Thank you.You will receive an email from our agent regarding your appointment timings. Have a great day!"}});
 	}
-	}
+}
 else if(context_id.equals("datetime"))
 {
 	ans = answers.get("datetime").get("text");
 	response.put("action","context");
 	response.put("context_id","confirmdatetime");
-	question1 = {"name":"confirm","replies":{{"text":"Thank you. We have sent you confirmation mail.Please click the link mentioned in the email to confirm your appointment."}},"input":{"type":"select","options":{"Changetime","Thanks"}}};
+	question1 = {"name":"confirm","replies":{{"text":"Thank you. We have sent you confirmation mail. Please click the link mentioned in the email to confirm your appointment."}},"input":{"type":"select","options":{"Changetime","Thanks"}}};
 	questions = Collection();
 	questions.insert(question1);
 	response.put("questions",questions);
@@ -57,5 +51,37 @@ else if(context_id.equals("confirmdatetime"))
 		response.put("action","end");
 		response.put("replies",{{"text":"Have a great day"}});
 	}
-	} 
+}
+if(context_id.equals("covid"))
+{
+	ans = answers.get("symptoms").get("text");
+	if(ans.containsIgnoreCase("Yes"))
+	{
+		response.put("action","reply");
+		response.put("replies",{{"text":"You should do the following steps: Visit a doctor and get tested for covid 19 and get hospitalized if necessary. Quarantine yourself and avoid contact with others. Wear masks properly. Sanitize your hands with soap frequently. Practice social distancing with others. Take medicines regularly as prescribed by your doctor."}});
+		response.put("suggestions",{"Thanks"});
+	}
+	else if(ans.containsIgnoreCase("No"))
+	{
+		response.put("action","reply");
+		response.put("replies",{{"text":"You should do the following steps: Wear masks properly. Sanitize your hands with soap frequently. Practice social distancing with others."}});
+		response.put("suggestions",{"Thanks"});
+	}
+}
+if(context_id.equals("vaccination"))
+{
+	ans1 = answers.get("vaccines").get("text");
+	response.put("action","reply");
+	response.put("replies",{{"text":"You can directly come to our hospital for vaccination or else you Contact us at: 044 1234 5126, 044 9874 5624 for home vaccination. Or you can mail us at medstarhospitals@gmail.com ."}});
+	response.put("suggestions",{"Thanks"});
+}
+if(context_id.equals("insurance"))
+{
+	ans1 = answers.get("done").get("text");
+	if(ans1.containsIgnoreCase("Thanks!"))
+	{
+		response.put("action","end");
+		response.put("replies",{{"text":"Have a great day"}});
+	}
+}
 return response;
