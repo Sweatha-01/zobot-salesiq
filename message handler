@@ -2,7 +2,7 @@ response = Map();
 msg = message.get("text");
 if(operation.equals("chat"))
 {
-	if(!msg.equalsIgnoreCase("Book appointments") && !msg.equalsIgnoreCase("Health insurance") && !msg.equalsIgnoreCase("Vaccination details")  && !msg.equalsIgnoreCase("Covid-19 guide") && !msg.equalsIgnoreCase("Biling and Payments") && !msg.equalsIgnoreCase("No Thanks!") && !msg.equalsIgnoreCase("Can't find what I'm looking for"))
+	if(!msg.equalsIgnoreCase("Book appointments") && !msg.equalsIgnoreCase("Health insurance") && !msg.equalsIgnoreCase("Vaccination details") && !msg.equalsIgnoreCase("Covid-19 guide") && !msg.equalsIgnoreCase("Biling and Payments") && !msg.equalsIgnoreCase("No Thanks!") && !msg.equalsIgnoreCase("Can't find what I'm looking for"))
 	{
 		response = Map();
 		response.put("action","reply");
@@ -23,7 +23,7 @@ if(msg.containsIgnoreCase("Book appointments"))
 	question8 = {"name":"mode","replies":{{"text":"Can I know which mode you prefer for the appointment?"}},"input":{"type":"select","options":{"Virtual","Physical"}}};
 	question6 = {"name":"email","replies":{{"text":"Can I have your email address so that we can reach you in case the chat gets disconnected","field_name":"siq_email","validate":{"format":"email","error":{"Enter a valid email"}}}}};
 	question5 = {"name":"illness","replies":{{"text":"Let’s get you started right away. Here’s a list of ailments. Choose the one you are undergoing through."}},"input":{"type":"select","options":{"Fever","Body pain","Child Care","Maternal checkup","Regular Checkup","Outpatient care","Others"}}};
-	question9 = {"name":"schedule","replies":{"Great! Our representative will call you. Would you like to pick a time slot for your appointment?"},"input":{"type":"select","options":{"Yeah","anytime"}}};
+	question9 = {"name":"schedule","replies":{"Done. Our representative will call you. Would you like to pick a time slot for your appointment?"},"input":{"type":"select","options":{"Yeah","anytime"}}};
 	questions = Collection();
 	questions.insert(question1);
 	questions.insert(question2);
@@ -36,20 +36,52 @@ if(msg.containsIgnoreCase("Book appointments"))
 	questions.insert(question9);
 	response.put("questions",questions);
 }
+else if(msg.equalsIgnoreCase("Health insurance"))
+{
+	response.put("action","context");
+	response.put("context_id","insurance");
+	question1 = {"name":"contact","replies":{{"text":"Can I have your contact number ? Our representative will call you on this number.","validate":{"format":"phoneno","error":{"Enter a valid phone number"}},"field_name":"siq_phone"}}};
+	question2 = {"name":"email","replies":{{"text":"Can I have your email address so that we can reach you in case the chat gets disconnected","field_name":"siq_email","validate":{"format":"email","error":{"Enter a valid email"}}}}};
+	question3 = {"name":"done","replies":{"Thank you! Our health insurance agent will call you within two days for more details. You can reach us at: 044 1234 5126, 044 9874 5624. Or you can mail us your query at medstarhospitals@gmail.com ."},"input":{"type":"select","options":{"Thanks!"}}};
+	questions = Collection();
+	questions.insert(question1);
+	questions.insert(question2);
+	questions.insert(question3);
+	response.put("questions",questions);
+}
+else if(msg.equalsIgnoreCase("Vaccination details"))
+{
+	response.put("action","context");
+	response.put("context_id","vaccination");
+	question1 = {"name":"vaccines","replies":{{"text":"Following vaccines are available at our hospital"}},"input":{"type":"select","options":{"Baby vaccines","Covaxin","Covishield","Sputnik V"}}};
+	questions = Collection();
+	questions.insert(question1);
+	response.put("questions",questions);
+}
 else if(msg.equalsIgnoreCase("Biling and Payments"))
 {
-	response.put("action","end");
-	response.put("replies",{{"text":"We accept Cash, Google pay, Phonepe, Credit cards and Netbanking. For further details contact us at: 044 1234 5126, 044 9874 5624. Or you can mail us your query at medstarhospitals@gmail.com . Thank you for visiting us. Have a great day!"}});
+	response.put("action","reply");
+	response.put("replies",{"We accept Cash, Google pay, Phonepe, Credit cards and Netbanking. For further details contact us at: 044 1234 5126, 044 9874 5624. Or you can mail us your query at medstarhospitals@gmail.com ."});
+	response.put("suggestions",{"Thanks!"});
+}
+else if(msg.containsIgnoreCase("Covid-19 guide"))
+{
+	response.put("action","context");
+	response.put("context_id","covid");
+	question1 = {"name":"symptoms","replies":{{"text":"Do you think you have covid symptoms (like shortness of breath, fever, cold, tiredness, loss of taste or smell)?"}},"input":{"type":"select","options":{"Yes","No"}}};
+	questions = Collection();
+	questions.insert(question1);
+	response.put("questions",questions);
 }
 else if(msg.containsIgnoreCase("No Thanks!"))
 {
 	response.put("action","end");
-	response.put("replies",{{"text":"Thank you for visiting us.Have a great day!"}});
+	response.put("replies",{{"text":"Thank you for visiting us. Have a great day!"}});
 }
 else if(msg.containsIgnoreCase("Can't find what I'm looking for"))
 {
 	response.put("action","end");
-	response.put("replies",{{"text":"You can contact our agents for help. Contact us at: 044 1234 5126, 044 9874 5624. Or you can mail us your query at medstarhospitals@gmail.com . Thank you for visiting us.Have a great day!"}});
+	response.put("replies",{{"text":"You can contact our agents for help. Contact us at: 044 1234 5126, 044 9874 5624. Or you can mail us your query at medstarhospitals@gmail.com . Thank you for visiting us. Have a great day!"}});
 }
 else
 {
